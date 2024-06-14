@@ -1,4 +1,7 @@
 using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
+using MySocialNetwork.Api.Extensions;
+using MySocialNetwork.Api.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,13 +32,11 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.AddDebugConfiguration();
 
 app.UseHttpsRedirection();
 
