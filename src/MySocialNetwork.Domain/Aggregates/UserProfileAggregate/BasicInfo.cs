@@ -8,12 +8,33 @@ namespace MySocialNetwork.Domain.Aggregates.UserProfileAggregate
 {
     public class BasicInfo
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public string Phone { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string CurrentCity { get; set; }
+        private BasicInfo()
+        {
 
+        }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string EmailAddress { get; private set; } // Talvez transformar em Value Object
+        public string Phone { get; private set; }
+        public DateTime DateOfBirth { get; private set; }
+        public string CurrentCity { get; private set; }
+
+        #region Factory Methods
+        public static BasicInfo CreateBasicInfo(string firstName, string lastName, string emailAddress,
+            string phone, DateTime dateOfBirth, string currentCity)
+        {
+            //TODO Add validation
+
+            return new()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                EmailAddress = emailAddress,
+                Phone = phone,
+                DateOfBirth = dateOfBirth,
+                CurrentCity = currentCity,
+            };
+        }
+        #endregion
     }
 }
