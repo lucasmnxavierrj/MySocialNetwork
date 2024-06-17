@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using MySocialNetwork.Domain.Models;
+using MySocialNetwork.Domain.Aggregates.PostAggregate;
 
 namespace MySocialNetwork.Api.Controllers.v1
 {

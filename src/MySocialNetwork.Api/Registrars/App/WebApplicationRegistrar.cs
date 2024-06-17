@@ -1,9 +1,8 @@
-﻿
-using Asp.Versioning.ApiExplorer;
+﻿using Asp.Versioning.ApiExplorer;
 
 namespace MySocialNetwork.Api.Registrars.App
 {
-    public class SwaggerRegistrar : IWebApplicationRegistrar
+    public class WebApplicationRegistrar : IWebApplicationRegistrar
     {
         public void RegisterPipelineComponents(WebApplication app)
         {
@@ -17,6 +16,11 @@ namespace MySocialNetwork.Api.Registrars.App
                         $"/swagger/{description.GroupName}/swagger.json",
                         $"MySocialNetwork v{description.ApiVersion}");
             });
+
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.MapControllers();
+
         }
     }
 }
