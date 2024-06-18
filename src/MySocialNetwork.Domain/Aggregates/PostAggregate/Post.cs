@@ -14,7 +14,7 @@ namespace MySocialNetwork.Domain.Aggregates.PostAggregate
         private Post()
         {
         }
-        public Guid PostId { get; private set; }
+        public Guid Id { get; private set; }
         public Guid UserProfileId { get; private set; }
         public string TextContent { get; private set; }
         public DateTime CreatedDate { get; private set; }

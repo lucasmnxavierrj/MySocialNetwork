@@ -12,7 +12,7 @@ namespace MySocialNetwork.Domain.Aggregates.UserProfileAggregate
         {
             
         }
-        public Guid UserProfileId { get; private set; }
+        public Guid Id { get; private set; }
         public string IdentityId { get; private set; }
         public BasicInfo BasicInfo { get; private set; }
         public DateTime DateCreated { get; private set; }

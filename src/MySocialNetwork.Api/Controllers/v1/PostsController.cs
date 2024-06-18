@@ -13,7 +13,7 @@ namespace MySocialNetwork.Api.Controllers.v1
         [Route("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(new Post { Id = id, Text = "Hello world!" });
+            return Ok("Hello World");
         }
     }
 }
