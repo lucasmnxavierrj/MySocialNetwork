@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
@@ -19,8 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MySocialNetwork.Application\MySocialNetwork.Application.csproj" />
     <ProjectReference Include="..\MySocialNetwork.Domain\MySocialNetwork.Domain.csproj" />
     <ProjectReference Include="..\MySocialNetwork.Infraestructure.DataAccess\MySocialNetwork.Infraestructure.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Contracts\Posts\Responses\" />
+    <Folder Include="Contracts\Posts\Requests\" />
   </ItemGroup>
 
 </Project>

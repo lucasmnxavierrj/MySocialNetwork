@@ -4,14 +4,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocialNetwork.Api", "src\MySocialNetwork.Api\MySocialNetwork.Api.csproj", "{74AD63D2-5887-4E10-8680-B2A2FEAED0F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7C3ADA8-15F0-4A61-B0E1-9DF9C377C0BE} = {A7C3ADA8-15F0-4A61-B0E1-9DF9C377C0BE}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocialNetwork.Domain", "src\MySocialNetwork.Domain\MySocialNetwork.Domain.csproj", "{A86C0B1C-BE94-4DC7-AB4E-87AB02DC2BA1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocialNetwork.Application", "src\MySocialNetwork.Application\MySocialNetwork.Application.csproj", "{A7C3ADA8-15F0-4A61-B0E1-9DF9C377C0BE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A86C0B1C-BE94-4DC7-AB4E-87AB02DC2BA1} = {A86C0B1C-BE94-4DC7-AB4E-87AB02DC2BA1}
+		{CD23E708-6833-44B7-A9E6-2E445D5F2C8F} = {CD23E708-6833-44B7-A9E6-2E445D5F2C8F}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocialNetwork.Infraestructure", "src\MySocialNetwork.Infraestructure\MySocialNetwork.Infraestructure.csproj", "{C0526946-9B74-444A-85E5-2D854C7EEBB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySocialNetwork.Infraestructure.DataAccess", "src\MySocialNetwork.Infraestructure.DataAccess\MySocialNetwork.Infraestructure.DataAccess.csproj", "{CD23E708-6833-44B7-A9E6-2E445D5F2C8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySocialNetwork.Infraestructure.DataAccess", "src\MySocialNetwork.Infraestructure.DataAccess\MySocialNetwork.Infraestructure.DataAccess.csproj", "{CD23E708-6833-44B7-A9E6-2E445D5F2C8F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A86C0B1C-BE94-4DC7-AB4E-87AB02DC2BA1} = {A86C0B1C-BE94-4DC7-AB4E-87AB02DC2BA1}
 	EndProjectSection

@@ -6,4 +6,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Posts\CommandHandlers\" />
+    <Folder Include="Posts\Commands\" />
+    <Folder Include="Posts\Queries\" />
+    <Folder Include="Posts\QueryHandlers\" />
+    <Folder Include="UserProfiles\QueryHandlers\" />
+    <Folder Include="UserProfiles\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MySocialNetwork.Domain\MySocialNetwork.Domain.csproj" />
+    <ProjectReference Include="..\MySocialNetwork.Infraestructure.DataAccess\MySocialNetwork.Infraestructure.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

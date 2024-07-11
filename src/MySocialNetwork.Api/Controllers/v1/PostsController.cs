@@ -5,7 +5,7 @@ using MySocialNetwork.Domain.Aggregates.PostAggregate;
 namespace MySocialNetwork.Api.Controllers.v1
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route(ApiRoutes.BaseUrl)]
     [ApiController]
     public class PostsController : ControllerBase
     {
