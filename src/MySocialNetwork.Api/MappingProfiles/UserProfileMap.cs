@@ -10,8 +10,10 @@ namespace MySocialNetwork.Api.MappingProfiles
     {
         public UserProfileMap()
         {
+            CreateMap<CreateUserCommand, Domain.Aggregates.UserProfileAggregate.BasicInfo>();
             CreateMap<UserProfileCreate,CreateUserCommand>();
             CreateMap<UserProfile, UserProfileResponse>();
+            CreateMap<BasicInfo, BasicInformation>();
         }
     }
 }

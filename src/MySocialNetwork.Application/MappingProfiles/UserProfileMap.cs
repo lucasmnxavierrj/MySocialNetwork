@@ -13,7 +13,6 @@ namespace MySocialNetwork.Application.MappingProfiles
     {
         public UserProfileMap()
         {
-            CreateMap<CreateUserCommand,BasicInfo>();
         }
     }
 }
