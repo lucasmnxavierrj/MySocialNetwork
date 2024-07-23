@@ -35,6 +35,7 @@ namespace MySocialNetwork.Domain.Aggregates.UserProfileAggregate
                 CurrentCity = currentCity,
             };
         }
+
         #endregion
     }
 }

@@ -14,6 +14,7 @@ namespace MySocialNetwork.Api.MappingProfiles
             CreateMap<UserProfileCreate,CreateUserCommand>();
             CreateMap<UserProfile, UserProfileResponse>();
             CreateMap<BasicInfo, BasicInformation>();
+            CreateMap<UserProfileUpdate, UpdateUserCommand>();
         }
     }
 }

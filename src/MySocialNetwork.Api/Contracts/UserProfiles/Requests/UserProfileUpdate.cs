@@ -1,7 +1,8 @@
 ﻿namespace MySocialNetwork.Api.Contracts.UserProfiles.Requests
 {
-    public record UserProfileCreate
+    public record UserProfileUpdate
     (
+        Guid id,
         string FirstName,
         string LastName,
         string EmailAddress,
@@ -9,4 +10,5 @@
         DateTime DateOfBirth,
         string CurrentCity
     );
+
 }

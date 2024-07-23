@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MySocialNetwork.Api.Contracts.UserProfiles.Requests;
 using MySocialNetwork.Api.Contracts.UserProfiles.Responses;
@@ -11,21 +12,15 @@ namespace MySocialNetwork.Api.Controllers.v1
 {
     [ApiController]
     [Route(ApiRoutes.BaseUrl)]
-    public class UserProfilesController : ControllerBase
+    public class UserProfilesController : BaseController
     {
-        public readonly IMediator _mediator;
-        public readonly IMapper _mapper;
-        public UserProfilesController(IMediator mediator, IMapper mapper)
-        {
-            _mediator = mediator;
-            _mapper = mapper;
-        }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllProfiles()
+        [HttpGet("GetAllProfiles")]
+        public async Task<IActionResult> GetAllProfiles(CancellationToken cancellationToken)
         {
             var query = new GetAllUserProfilesQuery();
-            var response = await _mediator.Send(query);
+
+            var response = await _mediator.Send(query, cancellationToken);
 
             var userProfiles = _mapper.Map<List<UserProfileResponse>>(response);
 
@@ -33,11 +28,11 @@ namespace MySocialNetwork.Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserProfileAsync([FromBody] UserProfileCreate userProfile)
+        public async Task<IActionResult> CreateUserProfileAsync([FromBody] UserProfileCreate request, CancellationToken cancellationToken)
         {
-            var command = _mapper.Map<CreateUserCommand>(userProfile);
+            var command = _mapper.Map<CreateUserCommand>(request);
 
-            var response = await _mediator.Send(command);
+            var response = await _mediator.Send(command, cancellationToken);
 
             var userProfileResponse = _mapper.Map<UserProfileResponse>(response);
 
@@ -46,15 +41,38 @@ namespace MySocialNetwork.Api.Controllers.v1
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetUserProfileById(string id)
+        public async Task<IActionResult> GetUserProfileById(string id, CancellationToken cancellationToken)
         {
             var query = new GetUserProfileByIdQuery(id);
 
-            var response = _mediator.Send(query);
+            var response = await _mediator.Send(query, cancellationToken);
 
             var userProfile = _mapper.Map<UserProfileResponse>(response);
 
             return Ok(userProfile);
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateUserProfile(UserProfileUpdate request, CancellationToken cancellationToken)
+        {
+            var command = _mapper.Map<UpdateUserCommand>(request);
+
+            var response = await _mediator.Send(command, cancellationToken);
+
+            if (response.IsError)
+                return HandleErrorResponse(response.Errors);
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUserProfile(string id, CancellationToken cancellationToken)
+        {
+            var query = new DeleteUserCommand(id);
+
+            await _mediator.Send(query);
+
+            return NoContent();
         }
     }
 }
