@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MySocialNetwork.Application.Models;
 using MySocialNetwork.Domain.Aggregates.UserProfileAggregate;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MySocialNetwork.Application.UserProfiles.Queries
 {
-    public class GetAllUserProfilesQuery : IRequest<IEnumerable<UserProfile>>
+    public class GetAllUserProfilesQuery : IRequest<ProcessResult<IEnumerable<UserProfile>>>
     {
     }
 }

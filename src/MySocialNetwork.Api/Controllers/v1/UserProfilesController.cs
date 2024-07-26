@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -36,7 +37,7 @@ namespace MySocialNetwork.Api.Controllers.v1
 
             var userProfileResponse = _mapper.Map<UserProfileResponse>(response);
 
-            return CreatedAtAction(nameof(GetUserProfileById), new { id = response.Id }, userProfileResponse);
+            return CreatedAtAction(nameof(GetUserProfileById), new { id = response.Payload.Id }, userProfileResponse);
         }
 
         [Route("{id}")]
@@ -46,6 +47,9 @@ namespace MySocialNetwork.Api.Controllers.v1
             var query = new GetUserProfileByIdQuery(id);
 
             var response = await _mediator.Send(query, cancellationToken);
+
+            if (response.IsError) 
+                HandleErrorResponse(response.Errors);
 
             var userProfile = _mapper.Map<UserProfileResponse>(response);
 
@@ -59,10 +63,9 @@ namespace MySocialNetwork.Api.Controllers.v1
 
             var response = await _mediator.Send(command, cancellationToken);
 
-            if (response.IsError)
-                return HandleErrorResponse(response.Errors);
-
-            return NoContent();
+            return response.IsError ?
+                HandleErrorResponse(response.Errors) :
+                NoContent();
         }
 
         [HttpDelete]
@@ -70,9 +73,11 @@ namespace MySocialNetwork.Api.Controllers.v1
         {
             var query = new DeleteUserCommand(id);
 
-            await _mediator.Send(query);
+            var response = await _mediator.Send(query);
 
-            return NoContent();
+            return response.IsError ?
+                HandleErrorResponse(response.Errors) :
+                NoContent();
         }
     }
 }

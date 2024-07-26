@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using MySocialNetwork.Application.Enums;
+using MySocialNetwork.Application.Models;
 using MySocialNetwork.Application.UserProfiles.Commands;
 using MySocialNetwork.Domain.Aggregates.UserProfileAggregate;
 using MySocialNetwork.Infraestructure.DataAccess;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserProfile>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ProcessResult<UserProfile>>
     {
         private readonly DataContext _context;
 
@@ -19,9 +21,11 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
         {
             _context = dataContext;
         }
-        public async Task<UserProfile> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<ProcessResult<UserProfile>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             // TODO: Adicionar Validação
+            var result = new ProcessResult<UserProfile>();
+
             var basicInfo = BasicInfo.CreateBasicInfo(request.FirstName, request.LastName,
                 request.EmailAddress, request.Phone, request.DateOfBirth, request.CurrentCity);
 
@@ -31,7 +35,9 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
 
             await _context.SaveChangesAsync();
 
-            return userProfile;
+            result.Payload = userProfile;
+
+            return result;
         }
     }
 }

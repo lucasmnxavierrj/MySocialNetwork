@@ -1,6 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MySocialNetwork.Application.Enums;
+using MySocialNetwork.Application.Models;
 using MySocialNetwork.Application.UserProfiles.Commands;
+using MySocialNetwork.Domain.Aggregates.UserProfileAggregate;
 using MySocialNetwork.Infraestructure.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -10,23 +13,38 @@ using System.Threading.Tasks;
 
 namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
 {
-    internal class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
+    internal class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ProcessResult<UserProfile>>
     {
         private readonly DataContext _context;
         public DeleteUserCommandHandler(DataContext dataContext)
         {
             _context = dataContext;
         }
-        public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<ProcessResult<UserProfile>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
+            var result = new ProcessResult<UserProfile>();
+
             var userProfile = await _context.UserProfiles
                 .FirstOrDefaultAsync(x => x.Id == request.UserId);
+
+            if(userProfile == null)
+            {
+                result.IsError = true;
+
+                result.Errors.Add(new()
+                {
+                    Code = ErrorCode.NotFound,
+                    Message = $"User not found with the id: '{request.UserId}'.",
+                });
+
+                return result;
+            }
 
             _context.Remove(userProfile);
 
             await _context.SaveChangesAsync();
 
-            return new Unit();
+            return result;
         }
     }
 }

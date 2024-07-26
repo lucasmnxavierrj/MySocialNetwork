@@ -55,6 +55,7 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
             catch(Exception ex)
             {
                 result.IsError = true;
+
                 result.Errors.Add(new()
                 {
                     Code = ErrorCode.ServerError,

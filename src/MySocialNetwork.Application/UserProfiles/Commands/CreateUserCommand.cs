@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using MySocialNetwork.Application.Models;
 using MySocialNetwork.Domain.Aggregates.UserProfileAggregate;
 
 
 namespace MySocialNetwork.Application.UserProfiles.Commands
 {
-    public class CreateUserCommand : IRequest<UserProfile>
+    public class CreateUserCommand : IRequest<ProcessResult<UserProfile>>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

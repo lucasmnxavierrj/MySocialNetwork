@@ -9,7 +9,7 @@ namespace MySocialNetwork.Application.Enums
     public enum ErrorCode
     {
         NotFound = 404,
-        ServerError,
+        ServerError = 500,
         BadRequest = 400,
     }
 }
