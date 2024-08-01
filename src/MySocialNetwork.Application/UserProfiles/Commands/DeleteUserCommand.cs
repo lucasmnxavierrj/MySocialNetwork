@@ -13,8 +13,10 @@ namespace MySocialNetwork.Application.UserProfiles.Commands
     {
         public DeleteUserCommand(string id)
         {
-            //TODO: Add validation
-            UserId = Guid.Parse(id);
+            if (Guid.TryParse(id, out Guid userId) is false)
+                return;
+
+            UserId = userId;
         }
         public Guid UserId { get; set; }
     }

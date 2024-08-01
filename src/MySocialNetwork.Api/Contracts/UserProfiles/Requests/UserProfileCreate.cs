@@ -1,4 +1,6 @@
-﻿namespace MySocialNetwork.Api.Contracts.UserProfiles.Requests
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MySocialNetwork.Api.Contracts.UserProfiles.Requests
 {
     public record UserProfileCreate
     (

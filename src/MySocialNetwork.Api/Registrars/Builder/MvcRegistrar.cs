@@ -1,5 +1,8 @@
 ﻿
 using Asp.Versioning;
+using MySocialNetwork.Api.Contracts.Common;
+using MySocialNetwork.Api.Filters;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 namespace MySocialNetwork.Api.Registrars.Builder
 {
@@ -7,7 +10,12 @@ namespace MySocialNetwork.Api.Registrars.Builder
     {
         public void RegisterServices(WebApplicationBuilder builder)
         {
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(config =>
+            {
+                config.Filters.Add(typeof(GlobalExceptionFilter));
+            });
+
+            builder.Services.AddFluentValidationAutoValidation();
 
             builder.Services.AddApiVersioning(config =>
             {

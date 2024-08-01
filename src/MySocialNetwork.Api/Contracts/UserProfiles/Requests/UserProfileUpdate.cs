@@ -2,7 +2,7 @@
 {
     public record UserProfileUpdate
     (
-        Guid id,
+        Guid Id,
         string FirstName,
         string LastName,
         string EmailAddress,

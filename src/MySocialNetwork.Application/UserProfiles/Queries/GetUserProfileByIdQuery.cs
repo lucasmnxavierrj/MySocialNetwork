@@ -13,7 +13,10 @@ namespace MySocialNetwork.Application.UserProfiles.Queries
     {
         public GetUserProfileByIdQuery(string id)
         {
-            UserId = Guid.Parse(id);
+            if (Guid.TryParse(id, out Guid userId) is false)
+                return;
+
+            UserId = userId;
         }
         public Guid UserId { get; set; }
     }

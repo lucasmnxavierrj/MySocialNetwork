@@ -1,13 +1,18 @@
 ﻿using AutoMapper;
 using Azure;
+using Azure.Core;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MySocialNetwork.Api.Contracts.UserProfiles.Requests;
 using MySocialNetwork.Api.Contracts.UserProfiles.Responses;
+using MySocialNetwork.Api.Filters;
+using MySocialNetwork.Api.Validators.UserProfile;
+using MySocialNetwork.Application.Enums;
 using MySocialNetwork.Application.UserProfiles.Commands;
 using MySocialNetwork.Application.UserProfiles.Queries;
+using System.Collections.Generic;
 
 namespace MySocialNetwork.Api.Controllers.v1
 {
@@ -23,7 +28,7 @@ namespace MySocialNetwork.Api.Controllers.v1
 
             var response = await _mediator.Send(query, cancellationToken);
 
-            var userProfiles = _mapper.Map<List<UserProfileResponse>>(response);
+            var userProfiles = _mapper.Map<List<UserProfileResponse>>(response.Payload);
 
             return Ok(userProfiles);
         }
@@ -35,7 +40,7 @@ namespace MySocialNetwork.Api.Controllers.v1
 
             var response = await _mediator.Send(command, cancellationToken);
 
-            var userProfileResponse = _mapper.Map<UserProfileResponse>(response);
+            var userProfileResponse = _mapper.Map<UserProfileResponse>(response.Payload);
 
             return CreatedAtAction(nameof(GetUserProfileById), new { id = response.Payload.Id }, userProfileResponse);
         }
@@ -46,12 +51,17 @@ namespace MySocialNetwork.Api.Controllers.v1
         {
             var query = new GetUserProfileByIdQuery(id);
 
+            if (query.UserId == Guid.Empty)
+                return HandleErrorResponse([
+                    new(ErrorCode.BadRequest,
+                        $"Invalid id: '{id}'")]);
+
             var response = await _mediator.Send(query, cancellationToken);
 
             if (response.IsError) 
                 HandleErrorResponse(response.Errors);
 
-            var userProfile = _mapper.Map<UserProfileResponse>(response);
+            var userProfile = _mapper.Map<UserProfileResponse>(response.Payload);
 
             return Ok(userProfile);
         }
@@ -72,6 +82,11 @@ namespace MySocialNetwork.Api.Controllers.v1
         public async Task<IActionResult> DeleteUserProfile(string id, CancellationToken cancellationToken)
         {
             var query = new DeleteUserCommand(id);
+
+            if (query.UserId == Guid.Empty)
+                return HandleErrorResponse([
+                    new(ErrorCode.BadRequest,
+                        $"Invalid id: '{id}'")]);
 
             var response = await _mediator.Send(query);
 
