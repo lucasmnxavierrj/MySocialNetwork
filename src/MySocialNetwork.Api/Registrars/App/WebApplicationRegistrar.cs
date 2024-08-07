@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning.ApiExplorer;
+using MySocialNetwork.Api.Middlewares;
 
 namespace MySocialNetwork.Api.Registrars.App
 {
@@ -16,7 +17,7 @@ namespace MySocialNetwork.Api.Registrars.App
                         $"/swagger/{description.GroupName}/swagger.json",
                         $"MySocialNetwork v{description.ApiVersion}");
             });
-
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();

@@ -12,7 +12,7 @@ namespace MySocialNetwork.Api.Registrars.Builder
         {
             builder.Services.AddControllers(config =>
             {
-                config.Filters.Add(typeof(GlobalExceptionFilter));
+                //config.Filters.Add(typeof(GlobalExceptionFilter));
             });
 
             builder.Services.AddFluentValidationAutoValidation();

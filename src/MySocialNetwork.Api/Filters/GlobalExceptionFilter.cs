@@ -8,10 +8,12 @@ namespace MySocialNetwork.Api.Filters
     {
         public override void OnException(ExceptionContext context)
         {
-            var response = new ApiErrorResponse();
+            var response = new ApiErrorResponse
+            {
+                StatusCode = 500,
+                StatusPhrase = "Internal Server Error"
+            };
 
-            response.StatusCode = 500;
-            response.StatusPhrase = "Internal Server Error";
             response.Errors.Add(context.Exception.Message);
 
             context.Result = new ObjectResult(response)

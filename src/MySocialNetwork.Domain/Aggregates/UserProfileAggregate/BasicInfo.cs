@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySocialNetwork.Domain.Validators.UseProfileValidators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,17 +24,24 @@ namespace MySocialNetwork.Domain.Aggregates.UserProfileAggregate
         public static BasicInfo CreateBasicInfo(string firstName, string lastName, string emailAddress,
             string phone, DateTime dateOfBirth, string currentCity)
         {
-            //TODO Add validation
+            var validator = new BasicInfoValidator();
 
-            return new()
+            var objToValidate = new BasicInfo
             {
                 FirstName = firstName,
                 LastName = lastName,
                 EmailAddress = emailAddress,
                 Phone = phone,
                 DateOfBirth = dateOfBirth,
-                CurrentCity = currentCity,
+                CurrentCity = currentCity
             };
+
+            var validationResult = validator.Validate(objToValidate);
+
+            if (validationResult.IsValid) 
+                return objToValidate;
+
+            throw new Exception("Error validating the creation of Basic Info."); ;
         }
 
         #endregion
