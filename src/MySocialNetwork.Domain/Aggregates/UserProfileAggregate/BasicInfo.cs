@@ -1,4 +1,5 @@
-﻿using MySocialNetwork.Domain.Validators.UseProfileValidators;
+﻿using MySocialNetwork.Domain.Exceptions;
+using MySocialNetwork.Domain.Validators.UseProfileValidators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,9 @@ namespace MySocialNetwork.Domain.Aggregates.UserProfileAggregate
             if (validationResult.IsValid) 
                 return objToValidate;
 
-            throw new Exception("Error validating the creation of Basic Info."); ;
+            throw new DomainValidationException(
+                "Error validating the creation of Basic Info.", 
+                validationResult.Errors.Select(error => error.ErrorMessage).ToList()) ;
         }
 
         #endregion

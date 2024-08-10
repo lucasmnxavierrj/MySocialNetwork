@@ -21,9 +21,6 @@ namespace MySocialNetwork.Domain.Aggregates.UserProfileAggregate
         #region Factory Methods
         public static UserProfile CreateUserProfile(string identityId, BasicInfo basicInfo)
         {
-
-            // TODO: Adicionar validações
-
             return new()
             {
                 IdentityId = identityId,

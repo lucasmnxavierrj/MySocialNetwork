@@ -10,8 +10,8 @@ namespace MySocialNetwork.Api.Filters
         {
             var response = new ApiErrorResponse
             {
-                StatusCode = 500,
-                StatusPhrase = "Internal Server Error"
+                StatusPhrase = "Internal Server Error",
+                StatusCode = 500
             };
 
             response.Errors.Add(context.Exception.Message);

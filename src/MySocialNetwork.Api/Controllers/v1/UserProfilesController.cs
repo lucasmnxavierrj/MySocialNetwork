@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MySocialNetwork.Api.Contracts.UserProfiles.Requests;
 using MySocialNetwork.Api.Contracts.UserProfiles.Responses;
-using MySocialNetwork.Api.Filters;
 using MySocialNetwork.Api.Validators.UserProfile;
 using MySocialNetwork.Application.Enums;
 using MySocialNetwork.Application.UserProfiles.Commands;
@@ -36,11 +35,12 @@ namespace MySocialNetwork.Api.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> CreateUserProfileAsync([FromBody] UserProfileCreate request, CancellationToken cancellationToken)
         {
-            throw new Exception("Just testing, nothing serious...");
-
             var command = _mapper.Map<CreateUserCommand>(request);
 
             var response = await _mediator.Send(command, cancellationToken);
+
+            if (response.IsError)
+                HandleErrorResponse(response.Errors);
 
             var userProfileResponse = _mapper.Map<UserProfileResponse>(response.Payload);
 
