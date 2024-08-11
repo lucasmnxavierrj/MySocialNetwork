@@ -9,15 +9,6 @@ using System.Threading.Tasks;
 
 namespace MySocialNetwork.Application.UserProfiles.Queries
 {
-    public class GetUserProfileByIdQuery : IRequest<ProcessResult<UserProfile>>
-    {
-        public GetUserProfileByIdQuery(string id)
-        {
-            if (Guid.TryParse(id, out Guid userId) is false)
-                return;
+    public record GetUserProfileByIdQuery(Guid Id) : IRequest<ProcessResult<UserProfile>>;
 
-            UserId = userId;
-        }
-        public Guid UserId { get; set; }
-    }
 }

@@ -12,13 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Posts\CommandHandlers\" />
-    <Folder Include="Posts\Commands\" />
-    <Folder Include="Posts\Queries\" />
-    <Folder Include="Posts\QueryHandlers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MySocialNetwork.Domain\MySocialNetwork.Domain.csproj" />
     <ProjectReference Include="..\MySocialNetwork.Infraestructure.DataAccess\MySocialNetwork.Infraestructure.DataAccess.csproj" />
   </ItemGroup>

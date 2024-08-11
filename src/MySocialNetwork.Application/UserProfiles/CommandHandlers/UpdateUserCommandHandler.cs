@@ -46,7 +46,7 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
                     request.EmailAddress, request.Phone, request.DateOfBirth, request.CurrentCity);
 
                 userProfile.UpdateBasicInfo(basicInfo);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
 
                 result.Payload = userProfile;
 

@@ -44,7 +44,7 @@ namespace MySocialNetwork.Domain.Aggregates.UserProfileAggregate
 
             throw new DomainValidationException(
                 "Error validating the creation of Basic Info.", 
-                validationResult.Errors.Select(error => error.ErrorMessage).ToList()) ;
+                validationResult.Errors.Select(error => error.ErrorMessage).ToList());
         }
 
         #endregion

@@ -25,7 +25,7 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
             var result = new ProcessResult<UserProfile>();
 
             var userProfile = await _context.UserProfiles
-                .FirstOrDefaultAsync(x => x.Id == request.UserId);
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if(userProfile == null)
             {
@@ -34,7 +34,7 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
                 result.Errors.Add(new()
                 {
                     Code = ErrorCode.NotFound,
-                    Message = $"User not found with the id: '{request.UserId}'.",
+                    Message = $"User not found with the id: '{request.Id}'.",
                 });
 
                 return result;

@@ -27,7 +27,8 @@ namespace MySocialNetwork.Domain.Validators.UseProfileValidators
                 .EmailAddress().WithMessage("Provided string is not a correct email address format.");
 
             RuleFor(info => info.DateOfBirth)
-                .InclusiveBetween(new DateTime(DateTime.Now.AddYears(-125).Ticks),
+                .InclusiveBetween(
+                    new DateTime(DateTime.Now.AddYears(-125).Ticks),
                     new DateTime(DateTime.Now.AddYears(-18).Ticks))
                 .WithMessage("Age needs to be between 18 and 125.");
         }

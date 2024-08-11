@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using Azure;
 using Azure.Core;
 using MediatR;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MySocialNetwork.Api.Contracts.UserProfiles.Requests;
 using MySocialNetwork.Api.Contracts.UserProfiles.Responses;
+using MySocialNetwork.Api.Filters;
 using MySocialNetwork.Api.Validators.UserProfile;
 using MySocialNetwork.Application.Enums;
 using MySocialNetwork.Application.UserProfiles.Commands;
@@ -15,6 +17,7 @@ using System.Collections.Generic;
 
 namespace MySocialNetwork.Api.Controllers.v1
 {
+    [ApiVersion("1.0")]
     [ApiController]
     [Route(ApiRoutes.BaseUrl)]
     public class UserProfilesController : BaseController
@@ -47,16 +50,11 @@ namespace MySocialNetwork.Api.Controllers.v1
             return CreatedAtAction(nameof(GetUserProfileById), new { id = response.Payload.Id }, userProfileResponse);
         }
 
-        [Route("{id}")]
-        [HttpGet]
+        [HttpGet("{id}")]
+        [ValidateGuid("id")]
         public async Task<IActionResult> GetUserProfileById(string id, CancellationToken cancellationToken)
         {
-            var query = new GetUserProfileByIdQuery(id);
-
-            if (query.UserId == Guid.Empty)
-                return HandleErrorResponse([
-                    new(ErrorCode.BadRequest,
-                        $"Invalid id: '{id}'")]);
+            var query = new GetUserProfileByIdQuery(Guid.Parse(id));
 
             var response = await _mediator.Send(query, cancellationToken);
 
@@ -81,14 +79,10 @@ namespace MySocialNetwork.Api.Controllers.v1
         }
 
         [HttpDelete]
+        [ValidateGuid("id")]
         public async Task<IActionResult> DeleteUserProfile(string id, CancellationToken cancellationToken)
         {
-            var query = new DeleteUserCommand(id);
-
-            if (query.UserId == Guid.Empty)
-                return HandleErrorResponse([
-                    new(ErrorCode.BadRequest,
-                        $"Invalid id: '{id}'")]);
+            var query = new DeleteUserCommand(Guid.Parse(id));
 
             var response = await _mediator.Send(query);
 

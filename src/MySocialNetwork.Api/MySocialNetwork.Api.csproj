@@ -27,9 +27,4 @@
     <ProjectReference Include="..\MySocialNetwork.Infraestructure.DataAccess\MySocialNetwork.Infraestructure.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\Posts\Responses\" />
-    <Folder Include="Contracts\Posts\Requests\" />
-  </ItemGroup>
-
 </Project>

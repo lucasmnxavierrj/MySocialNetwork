@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MySocialNetwork.Domain.Exceptions;
+using MySocialNetwork.Domain.Validators.PostValidators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +24,9 @@ namespace MySocialNetwork.Domain.Aggregates.PostAggregate
         #region Factory Methods
         public static PostComment CreatePostComment(Guid postId, Guid userProfileId, string text)
         {
-            // TODO: Adicionar validação
+            var validator = new PostCommentValidator();
 
-            return new()
+            var objectToValidate = new PostComment()
             {
                 PostId = postId,
                 UserProfileId = userProfileId,
@@ -32,11 +34,23 @@ namespace MySocialNetwork.Domain.Aggregates.PostAggregate
                 CreatedDate = DateTime.UtcNow,
                 LastModified = DateTime.UtcNow,
             };
+
+            var validationResult = validator.Validate(objectToValidate);
+
+            if (validationResult.IsValid)
+                return objectToValidate;
+
+            throw new DomainValidationException(
+                "Error validating the creation of PostComment.",
+                validationResult.Errors.Select(error => error.ErrorMessage).ToList());
         }
         #endregion
         #region Public Methods
         public void UpdateCommentText(string newText)
         {
+            if (string.IsNullOrEmpty(newText) is true)
+                throw new DomainValidationException("The PostComment's new text cannot be null or empty.");
+
             Text = newText;
             LastModified = DateTime.UtcNow;
         }
