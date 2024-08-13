@@ -1,19 +1,10 @@
 ﻿using Asp.Versioning;
-using AutoMapper;
-using Azure;
-using Azure.Core;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MySocialNetwork.Api.Contracts.UserProfiles.Requests;
 using MySocialNetwork.Api.Contracts.UserProfiles.Responses;
 using MySocialNetwork.Api.Filters;
-using MySocialNetwork.Api.Validators.UserProfile;
-using MySocialNetwork.Application.Enums;
 using MySocialNetwork.Application.UserProfiles.Commands;
 using MySocialNetwork.Application.UserProfiles.Queries;
-using System.Collections.Generic;
 
 namespace MySocialNetwork.Api.Controllers.v1
 {
@@ -52,7 +43,7 @@ namespace MySocialNetwork.Api.Controllers.v1
 
         [HttpGet("{id}")]
         [ValidateGuid("id")]
-        public async Task<IActionResult> GetUserProfileById(string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUserProfileById([FromQuery] string id, CancellationToken cancellationToken)
         {
             var query = new GetUserProfileByIdQuery(Guid.Parse(id));
 
@@ -67,7 +58,7 @@ namespace MySocialNetwork.Api.Controllers.v1
         }
 
         [HttpPatch]
-        public async Task<IActionResult> UpdateUserProfile(UserProfileUpdate request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUserProfile([FromBody] UserProfileUpdate request, CancellationToken cancellationToken)
         {
             var command = _mapper.Map<UpdateUserCommand>(request);
 
@@ -80,7 +71,7 @@ namespace MySocialNetwork.Api.Controllers.v1
 
         [HttpDelete]
         [ValidateGuid("id")]
-        public async Task<IActionResult> DeleteUserProfile(string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteUserProfile([FromQuery] string id, CancellationToken cancellationToken)
         {
             var query = new DeleteUserCommand(Guid.Parse(id));
 

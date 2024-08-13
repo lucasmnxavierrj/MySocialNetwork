@@ -20,12 +20,12 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
         {
             _context = dataContext;
         }
-        public async Task<ProcessResult<UserProfile>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<ProcessResult<UserProfile>> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
         {
             var result = new ProcessResult<UserProfile>();
 
             var userProfile = await _context.UserProfiles
-                .FirstOrDefaultAsync(x => x.Id == request.Id);
+                .FirstOrDefaultAsync(x => x.Id == command.Id);
 
             if(userProfile == null)
             {
@@ -34,7 +34,7 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
                 result.Errors.Add(new()
                 {
                     Code = ErrorCode.NotFound,
-                    Message = $"User not found with the id: '{request.Id}'.",
+                    Message = $"User not found with the id: '{command.Id}'.",
                 });
 
                 return result;

@@ -13,6 +13,11 @@ namespace MySocialNetwork.Api.MappingProfiles
             CreateMap<CreatePost, CreatePostCommand>()
                 .ForMember(dest => dest.UserProfileId,
                     opt => opt.MapFrom(src => Guid.Parse(src.UerProfileId)));
+            CreateMap<UpdatePost, UpdatePostCommand>()
+                .ForMember(dest => dest.UserProfileId,
+                    opt => opt.MapFrom(src => Guid.Parse(src.UerProfileId)))
+                .ForMember(dest => dest.Id,
+                    opt => opt.MapFrom(src => Guid.Parse(src.Id)));
             CreateMap<Post, PostResponse>();
 
         }
