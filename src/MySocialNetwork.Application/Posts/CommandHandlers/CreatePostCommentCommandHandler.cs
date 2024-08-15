@@ -25,12 +25,12 @@ namespace MySocialNetwork.Application.Posts.CommandHandlers
 
             try
             {
-                var post = PostComment
+                var comment = PostComment
                     .CreatePostComment(command.PostId, command.UserProfileId, command.Text);
 
-                await _context.AddAsync(post);
+                await _context.AddAsync(comment);
 
-                result.Payload = post;
+                result.Payload = comment;
 
                 return result;
             }
