@@ -3,6 +3,7 @@ using MySocialNetwork.Application.Enums;
 using MySocialNetwork.Application.Models;
 using MySocialNetwork.Application.Posts.Commands;
 using MySocialNetwork.Domain.Aggregates.PostAggregate;
+using MySocialNetwork.Domain.Exceptions;
 using MySocialNetwork.Infraestructure.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,16 @@ namespace MySocialNetwork.Application.Posts.CommandHandlers
                 await _context.AddAsync(comment);
 
                 result.Payload = comment;
+
+                return result;
+            }
+            catch(DomainValidationException ex)
+            {
+                result.IsError = true;
+
+                result.Errors = ex.ValidationErrors
+                    .Select(error => new Error(ErrorCode.BadRequest, error))
+                    .ToList();
 
                 return result;
             }
