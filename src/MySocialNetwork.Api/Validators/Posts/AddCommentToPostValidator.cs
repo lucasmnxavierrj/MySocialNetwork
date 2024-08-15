@@ -4,7 +4,7 @@ using MySocialNetwork.Api.Filters;
 
 namespace MySocialNetwork.Api.Validators.Posts
 {
-    public class AddCommentToPostValidator : AbstractValidator<AddCommentToPost>
+    public class AddCommentToPostValidator : AbstractValidator<CreatePostComment>
     {
         public AddCommentToPostValidator()
         {

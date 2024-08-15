@@ -6,7 +6,6 @@ using MySocialNetwork.Api.Contracts.UserProfiles.Responses;
 using MySocialNetwork.Api.Filters;
 using MySocialNetwork.Application.Posts.Commands;
 using MySocialNetwork.Application.Posts.Queries;
-using MySocialNetwork.Application.UserProfiles.Commands;
 using MySocialNetwork.Domain.Aggregates.PostAggregate;
 
 namespace MySocialNetwork.Api.Controllers.v1
@@ -105,9 +104,9 @@ namespace MySocialNetwork.Api.Controllers.v1
 
         [HttpPost("{postId}/comments")]
         [ValidateGuid("postId")]
-        public async Task<IActionResult> AddCommentToPost([FromRoute] string postId, [FromBody] AddCommentToPost request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddCommentToPost([FromRoute] string postId, [FromBody] CreatePostComment request, CancellationToken cancellationToken)
         {
-            var command = _mapper.Map<AddCommentToPostCommand>(request);
+            var command = _mapper.Map<CreatePostCommentCommand>(request);
             command.PostId = Guid.Parse(postId);
 
             var result = await _mediator.Send(command, cancellationToken);

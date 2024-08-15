@@ -2,7 +2,6 @@
 using MySocialNetwork.Api.Contracts.Posts.Requests;
 using MySocialNetwork.Api.Contracts.Posts.Responses;
 using MySocialNetwork.Application.Posts.Commands;
-using MySocialNetwork.Application.UserProfiles.Commands;
 using MySocialNetwork.Domain.Aggregates.PostAggregate;
 
 namespace MySocialNetwork.Api.MappingProfiles
@@ -19,7 +18,7 @@ namespace MySocialNetwork.Api.MappingProfiles
                     opt => opt.MapFrom(src => Guid.Parse(src.UserProfileId)));
             CreateMap<Post, PostResponse>();
             CreateMap<PostCommentResponse, PostComment>();
-            CreateMap<AddCommentToPost, AddCommentToPostCommand>()
+            CreateMap<CreatePostComment, CreatePostCommentCommand>()
                 .ForMember(dest => dest.UserProfileId,
                     opt => opt.MapFrom(src => Guid.Parse(src.UserProfileId)));
         }
