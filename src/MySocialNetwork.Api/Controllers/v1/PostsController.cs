@@ -30,7 +30,7 @@ namespace MySocialNetwork.Api.Controllers.v1
 
         [HttpGet("{id}")]
         [ValidateGuid("id")]
-        public async Task<IActionResult> GetById([FromQuery] string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetById([FromRoute] string id, CancellationToken cancellationToken)
         {
             var query = new GetPostByIdQuery(Guid.Parse(id));
 
@@ -59,10 +59,12 @@ namespace MySocialNetwork.Api.Controllers.v1
             return CreatedAtAction(nameof(GetById), new { id = result.Payload.Id }, response);
         }
 
-        [HttpPatch]
-        public async Task<IActionResult> UpdatePost([FromBody] UpdatePost request, CancellationToken cancellationToken)
+        [HttpPatch("{postId}")]
+        [ValidateGuid("postId")]
+        public async Task<IActionResult> UpdatePost([FromRoute] string postId, [FromBody] UpdatePost request, CancellationToken cancellationToken)
         {
             var command = _mapper.Map<UpdatePostCommand>(request);
+            command.Id = Guid.Parse(postId);
 
             var result = await _mediator.Send(command, cancellationToken);
 
@@ -74,7 +76,7 @@ namespace MySocialNetwork.Api.Controllers.v1
 
         [HttpDelete]
         [ValidateGuid("id")]
-        public async Task<IActionResult> DeletePost([FromQuery] string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeletePost([FromRoute] string id, CancellationToken cancellationToken)
         {
             var query = new DeletePostCommand(Guid.Parse(id));
 
@@ -83,6 +85,39 @@ namespace MySocialNetwork.Api.Controllers.v1
             return response.IsError ?
                 HandleErrorResponse(response.Errors) :
                 NoContent();
+        }
+
+        [HttpGet("{postId}/Comments")]
+        [ValidateGuid("postId")]
+        public async Task<IActionResult> GetCommentsByPostId([FromRoute] string postId, CancellationToken cancellationToken)
+        {
+            var query = new GetAllCommentsByPostIdQuery(Guid.Parse(postId));
+
+            var result = await _mediator.Send(query, cancellationToken);
+
+            if (result.IsError)
+                HandleErrorResponse(result.Errors);
+
+            var response = _mapper.Map<PostCommentResponse>(result.Payload);
+
+            return Ok(response);
+        }
+
+        [HttpPost("{postId}/comments")]
+        [ValidateGuid("postId")]
+        public async Task<IActionResult> AddCommentToPost([FromRoute] string postId, [FromBody] AddCommentToPost request, CancellationToken cancellationToken)
+        {
+            var command = _mapper.Map<AddCommentToPostCommand>(request);
+            command.PostId = Guid.Parse(postId);
+
+            var result = await _mediator.Send(command, cancellationToken);
+
+            if (result.IsError)
+                HandleErrorResponse(result.Errors);
+
+            var response = _mapper.Map<PostCommentResponse>(result.Payload);
+
+            return Ok(response); // Mudar pra createdAtAction.
         }
     }
 }

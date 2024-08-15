@@ -61,9 +61,10 @@ namespace MySocialNetwork.Application.UserProfiles.CommandHandlers
                     Code = ErrorCode.ServerError,
                     Message = ex.Message,
                 });
+
+                return result;
             }
 
-            return result;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace MySocialNetwork.Api.Contracts.Posts.Requests
 {
-    public record UpdatePost(
+    public record AddCommentToPost(
         string UserProfileId,
-        string TextContent
+        string Text
         );
 }
