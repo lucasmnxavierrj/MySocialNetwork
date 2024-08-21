@@ -11,6 +11,7 @@
     <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageReference Include="MediatR" Version="12.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Mvc" Version="1.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
@@ -25,6 +26,10 @@
     <ProjectReference Include="..\MySocialNetwork.Application\MySocialNetwork.Application.csproj" />
     <ProjectReference Include="..\MySocialNetwork.Domain\MySocialNetwork.Domain.csproj" />
     <ProjectReference Include="..\MySocialNetwork.Infraestructure.DataAccess\MySocialNetwork.Infraestructure.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Contracts\Identity\" />
   </ItemGroup>
 
 </Project>
